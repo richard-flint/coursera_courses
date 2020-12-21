@@ -3,9 +3,11 @@
 Created on Fri Apr 17 11:06:51 2020
 
 @author: richard_dev
-"""
 
-#Note: This uses pre-defined Theta values provided by course documentation
+Summary: This script implements a neural network algorithm to identify the
+digits 0 to 9 in greyscale images. Note that This implementation uses 
+pre-defined Theta values provided by course documentation
+"""
 
 #Clear workspace
 from IPython import get_ipython

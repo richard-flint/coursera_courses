@@ -1,0 +1,531 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section{Machine Learning Formulae}
+\begin{flushleft}Note: Lecture notes and slides available here:\linebreak \url{https://vkosuri.github.io/CourseraMachineLearning/}\end{flushleft} 
+\subsection{Notation}
+\subsubsection{Linear and logistic regression}
+Feature:
+\begin{equation}
+x_j
+\end{equation}
+Single data point in a feature:
+\begin{equation}
+x_j^{(i)}
+\end{equation}
+Feature vector:
+\begin{equation}
+x=\begin{bmatrix}
+x_0\\
+x_1\\
+x_2\\
+x_3\\
+\vdots\\
+x_n\\
+\end{bmatrix}
+\end{equation}
+Matrix of training examples, stored row-wise:
+\begin{equation}
+X=\begin{bmatrix}
+x_0 & x_1 & x_2 & \cdots & x_n
+\end{bmatrix}=\begin{bmatrix}
+x_0^{(1)} & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)}\\
+x_0^{(2)} & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)}\\
+x_0^{(3)} & x_1^{(3)} & x_2^{(3)} & \cdots & x_n^{(3)}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+x_0^{(m)} & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)}\\
+\end{bmatrix}
+\end{equation}
+Theta:
+\begin{equation}
+\theta=\begin{bmatrix}
+\theta_0\\
+\theta_1\\
+\theta_2\\
+\vdots\\
+\theta_n\\
+\end{bmatrix}
+\end{equation}
+Feature scaling:
+\begin{equation}
+x_j:=\frac{x_j}{s_j}\;\;\; \textrm{where}\;\;\; s_j=max(x_j)-min(x_j)
+\end{equation}
+Mean normalisation:
+\begin{equation}
+x_j:=x_j-\mu_j\;\;\; \textrm{where}\;\;\; \mu_j=\frac{\sum_{i=1}^{m}x_j^{(i)}}{m}
+\end{equation}
+Feature normalisation (feature scaling \textit{and} mean normalisation):
+\begin{equation}
+x_j:=\frac{x_j-\mu_j}{s_j}
+\end{equation}
+\subsubsection{Neural networks}
+General structure:
+\begin{equation}
+\begin{bmatrix}
+x_0\\x_1\\x_3\\ \vdots \\ x_n
+\end{bmatrix}
+\rightarrow \begin{bmatrix}
+a_0^{(1)}\\a_1^{(1)}\\a_2^{(1)}\\ \vdots \\ a_n^{(1)}
+\end{bmatrix}
+\rightarrow \begin{bmatrix}
+a_0^{(2)}\\a_1^{(2)}\\a_2^{(2)}\\ \vdots \\ a_n^{(2)}
+\end{bmatrix}
+\end{equation}
+\newpage
+
+\subsection{Linear regression}
+\subsubsection{Basic equations}
+Hypothesis function:
+\begin{equation}
+h_{\theta}(x)=\theta^{T}x=\theta_{0}x_0 + \theta_{1}x_1 + \theta_{2}x_2 + \dots + \theta_{n}x_n
+\end{equation}
+Cost function:
+\begin{equation}
+J(\theta)=\frac{1}{2m}\sum_{i=1}^{m}(h_{\theta}^{(i)}-y^{(i)})^{2}
+\end{equation}
+\begin{equation}
+J(\theta)=\frac{1}{2m}(X\theta-y)^{T}(X\theta-y)
+\end{equation}
+Gradient descent:
+\begin{equation}
+\theta_j:=\theta_j-\alpha\frac{\partial J(\theta)}{\partial\theta_j}
+\end{equation}
+\begin{equation}
+\theta:=\theta-\alpha\nabla J(\theta)
+\end{equation}
+Gradient descent (update rule):
+\begin{multline}
+repeat\:until\:convergence: \{\\
+\theta_j:=\theta_{j}-\alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_j\\
+\}
+\end{multline}
+\begin{multline}
+repeat\:until\:convergence: \{\\
+\theta:=\theta-\frac{\alpha}{m}X^{T}(X\theta-y)\\
+\}
+\end{multline}
+Normal equation:
+\begin{equation}
+\theta=(X^{T}X)^{-1}X^{T}y
+\end{equation}
+\subsubsection{Polynomial regression}
+Hypothesis function:
+\begin{equation}
+h_{\theta}(x)=\theta^{T}x=\theta_{0}x_0 + \theta_{1}x_1 + \theta_{2}x_2 + \dots + \theta_{n}x_n
+\end{equation}
+But where some of the higher-order features are more complex functions of lower order features e.g.:
+\begin{equation}
+x_3=x_1\sqrt{x_2}
+\end{equation}
+
+\subsubsection{Equations with regularisation}
+Cost function:
+\begin{equation}
+J(\theta)=\frac{1}{2m}[\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})^{2}+\lambda\sum_{j=1}^{n}\theta_j^{2}]
+\end{equation}
+\begin{equation}
+J(\theta)=\frac{1}{2m}[(X\theta-y)^{T}(X\theta-y)+\lambda\theta^{T}\theta]
+\end{equation}
+Gradient descent (update rule):
+\begin{multline}
+repeat\:until\:convergence: \{\\
+\theta_0:=\theta_{0}-\alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_0\\
+\theta_j:=\theta_{j}-\alpha [(\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_j)+\frac{\lambda}{m}\theta_j]\\
+\}
+\end{multline}
+\begin{flushleft}
+Note: By convention, the $\theta_0$,$x_0$ update term is not regularised.
+\end{flushleft}
+The update rule can also be re-arranged to give the original update rule, plus an additional term at the front:
+\begin{equation}
+\theta_j:=\theta_{j}(1-\alpha\frac{\lambda}{m})-\alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_j\\
+\end{equation}
+Normal equation:
+\begin{equation}
+\theta=(X^{T}X+\lambda \cdot L)^{-1}X^{T}y
+\end{equation}
+Where:
+\begin{equation}
+L=\begin{bmatrix}0 & 0 & 0 & \cdots & 0\\
+0 & 1 & 0 & \cdots & 0\\
+0 & 0 & 1 & \cdots & 0\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+0 & 0 & 0 & \cdots & 1
+\end{bmatrix}
+\end{equation}
+\newpage
+
+\subsection{Logistic regression}
+\subsubsection{Basic equations}
+Hypothesis function:
+\begin{equation}
+h_{\theta}(x)=g(\theta^{T}x)
+\end{equation}
+\begin{equation}
+h_{\theta}(x)=g(X\theta)
+\end{equation}
+Where:
+\begin{equation}
+g(\theta^{T}x)=\frac{1}{1+e^{-\theta^{T}x}}
+\end{equation}
+Hypothesis function interpretation:
+\begin{equation}
+h_{\theta}(x)=P(y=1|x;\theta)=1-P(y=0|x;\theta)
+\end{equation}
+Decision boundary:
+\begin{equation}
+h_{\theta}(x)\geq 0.5 \rightarrow y=1
+\end{equation}
+\begin{equation}
+h_{\theta}(x)< 0.5 \rightarrow y=0
+\end{equation}
+Decision boundary (2):
+\begin{equation}
+\theta^{T}x\geq 0 \rightarrow y=1
+\end{equation}
+\begin{equation}
+\theta^{T}x<0 \rightarrow y=0
+\end{equation}
+Cost function:
+\begin{equation}
+J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)}log(h_{\theta}(x^{(i)}))+(1-y^{(i)})log(1-h_{\theta}(x^{(i)}))]\\
+\end{equation}
+\begin{equation}
+J(\theta)=\frac{1}{m}[-y^{T}log(h)-(1-y)^{T}log(1-h)]
+\end{equation}
+Gradient descent (update rule):
+\begin{multline}
+repeat\:until\:convergence: \{\\
+\theta_j:=\theta_{j}-\frac{\alpha}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_j\\
+\}
+\end{multline}
+\begin{multline}
+repeat\:until\:convergence: \{\\
+\theta:=\theta-\frac{\alpha}{m}X^{T}(g(X\theta)-y)\\
+\}
+\end{multline}
+Multi-class classification:
+\begin{equation}
+\begin{aligned}
+&y \in \{0,1,2,...,n\}\notag\\
+&h_{\theta}^{(0)}(x)=P(y=0|x;\theta)\\
+&h_{\theta}^{(1)}(x)=P(y=1|x;\theta)\\
+&h_{\theta}^{(2)}(x)=P(y=2|x;\theta)\\
+&\vdots\\
+&h_{\theta}^{(n)}(x)=P(y=n|x;\theta)\\
+&prediction = max(h_{\theta}^{(i)}(x))
+\end{aligned}
+\end{equation}
+\subsubsection{Equations with regularisation}
+Cost function:
+\begin{equation}
+J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)}log(h_{\theta}(x^{(i)}))+(1-y^{(i)})log(1-h_{\theta}(x^{(i)}))]+\frac{\lambda}{2m}\sum_{j=1}^{n}\theta_{j}^2
+\end{equation}
+\begin{equation}
+J(\theta)=\frac{1}{m}[-y^{T}log(h)-(1-y)^{T}log(1-h)]+\frac{\lambda}{2m}\theta^T\theta
+\end{equation}
+Gradient descent (update rule):
+\begin{multline}
+repeat\:until\:convergence: \{\\
+\theta_0:=\theta_{0}-\alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_0\\
+\theta_j:=\theta_{j}-\alpha [(\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_j)+\frac{\lambda}{m}\theta_j]\\
+\}
+\end{multline}
+\begin{flushleft}
+Note: This is the same as the update rule for linear regression. By convention, the $\theta_0$,$x_0$ update term is not regularised.
+\end{flushleft}
+As with linear regression, the update rule can also be re-arranged to give the original update rule, plus an additional term at the front:
+\begin{equation}
+\theta_j:=\theta_{j}(1-\alpha\frac{\lambda}{m})-\alpha\frac{1}{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})\cdot x_j\\
+\end{equation}
+\newpage
+
+\subsection{Neural networks}
+\subsubsection{Notation}
+\begin{flalign*}
+& L \textrm{ = number of layers}\\
+& l \textrm{ = specific layer number}\\
+& s_l \textrm{ = number of units/nodes (not including bias unit) in layer l}\\
+& a_j^{(l)} \textrm{ = unit/node $j$ in layer $l$}\\
+& a_j^{(t)(l)} \textrm{ = training example in unit/node $j$ in layer $l$}\\
+& \Theta^{l} \textrm{ = matrix of weights for moving between layer $l$ and $l+1$}\\
+& \Theta^{l}_{i,j} \textrm{ = row $i$, column $j$ in matrix of weights $l$}\\
+& a^{(1)} = X \textrm{ = input layer}\\
+& a^{(L)} = h_{\Theta}(x) \textrm{ = output layer}\\
+& K \textrm{ = number of classes in the output layer = number of classes in $y$ (including 0)}
+\end{flalign*}
+\subsubsection{Matrix dimensions}
+The input layer $a^{(1)}$ is the same as the matrix of training examples $X$:
+\begin{equation}
+a^{(1)}=X=\begin{bmatrix}
+& & \leftarrow & n+1 & \rightarrow & &\\
+& \uparrow & & & & & \\
+& m & & & & & \\
+& \downarrow & & & & & \\
+& & & & & & \\
+\end{bmatrix} = \begin{bmatrix}
+& x_0 & x_1 & x_2 & \cdots & x_n &\\
+& & & & & \\
+& & & & & \\
+& & & & & \\
+& & & & & \\
+\end{bmatrix}
+\end{equation}
+Where: \begin{equation}
+x_0=\begin{bmatrix}
+1 & 1 & 1 & \cdots & 1
+\end{bmatrix}
+\end{equation}\\
+The hidden layers have ($s_{l}+1$) columns (the `$+1$' is the bias unit), each with $m$ training examples:
+\begin{equation}
+a^{(l)}=\begin{bmatrix}
+& & \leftarrow & (s_{l}+1) & \rightarrow & &\\
+& \uparrow & & & & & \\
+& m & & & & & \\
+& \downarrow & & & & & \\
+& & & & & & \\
+\end{bmatrix} = \begin{bmatrix}
+& a_0^{(l)} & a_1^{(l)} & a_2^{(l)} & \cdots & a_n^{(l)} &\\
+& & & & & \\
+& & & & & \\
+& & & & & \\
+& & & & & \\
+\end{bmatrix}
+\end{equation}
+Where: \begin{equation}
+a^{(l)}_0= \begin{bmatrix}
+1 & 1 & 1 & \cdots & 1
+\end{bmatrix}
+\end{equation}
+The output layer $a^{(L)}$ is the model hypothesis $h_{\Theta}(x)$.\\
+\\
+For a single class neural network, this is a vector whose values correspond to the hypothesis value for each entry in the training data:
+\begin{equation}
+a^{(L)}=h_{\Theta}(x)=\begin{bmatrix}
+h_{(\Theta)}(x^{(1)})\\
+h_{(\Theta)}(x^{(2)})\\
+h_{(\Theta)}(x^{(3)})\\
+\vdots \\
+h_{(\Theta)}(x^{(m)})\\
+\end{bmatrix}
+\end{equation}
+For a multiclass neural network, this is a matrix of values whose columns correspond to the different classes, and whose rows correspond to each entry in the training data:
+\begin{equation*}
+a^{(L)}=h_{\Theta}(x)=\begin{bmatrix}
+h_{\Theta}(x)_1\\
+h_{\Theta}(x)_2\\
+h_{\Theta}(x)_3\\
+\vdots \\
+h_{\Theta}(x)_K
+\end{bmatrix}
+\end{equation*}
+\begin{equation}
+=\begin{bmatrix}
+& & \leftarrow & K & \rightarrow & &\\
+& \uparrow & & & & & \\
+& m & & & & & \\
+& \downarrow & & & & & \\
+& & & & & & \\
+\end{bmatrix}=\begin{bmatrix}
+& h_{\Theta}(x^{(t)})_1 & h_{\Theta}(x^{(t)})_2 & h_{\Theta}(x^{(t)})_3 & \cdots & h_{\Theta}(x^{(t)})_K\\
+& & & & & \\
+& & & & & \\
+& & & & & \\
+& & & & & \\
+\end{bmatrix}
+\end{equation}
+Remember, the hypothesis values correspond to the probability of training example $t$ being in class $K$:
+\begin{equation}
+h_{\Theta}(x^{(t)})_k=P(x^{(t)}=k|x;\Theta)
+\end{equation}
+\\
+The matrix of weights $\Theta^{l}_{i,j}$ has $s_l+1$ rows (the $+1$ from the bias unit) and ($s_{l+1}$) columns:
+\begin{equation}
+\Theta^{l}_{i,j}=\begin{bmatrix}
+& & \leftarrow & s_{l}+1 & \rightarrow & &\\
+& \uparrow & & & & & \\
+& s_{l+1} & & & & & \\
+& \downarrow & & & & & \\
+& & & & & & \\
+\end{bmatrix}
+\end{equation}
+The data classifications in $y$ are represented as a binary $m \times k$ matrix, with each row corresponding to an entry in the training data, and each column corresponding to a different class.
+\begin{equation}
+y=\begin{bmatrix}
+& y_0 & y_1 & y_2 & \cdots & y_K &\\
+& & & & & & \\
+& & & & & & \\
+& & & & & & \\
+& & & & & & \\
+\end{bmatrix}=\begin{bmatrix}
+& & \leftarrow & K & \rightarrow & &\\
+& \uparrow & & & & & \\
+& m & & & & & \\
+& \downarrow & & & & & \\
+& & & & & & \\
+\end{bmatrix}
+\end{equation}
+And the mapping is as follows:
+\begin{equation}
+y=\begin{bmatrix}
+1\\5\\2\\8\\9\\0\\5\\ \vdots \\9
+\end{bmatrix} \rightarrow \begin{bmatrix}
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+\end{bmatrix}
+\end{equation}
+\subsubsection{Basic representation}
+Single class neural network:
+\begin{equation}
+\begin{bmatrix}
+x_0\\x_1\\x_2\\ \vdots \\x_n
+\end{bmatrix} \rightarrow \begin{bmatrix}
+a_0^{(2)}\\a_1^{(2)}\\a_2^{(2)}\\ \cdots 
+\end{bmatrix} \rightarrow \begin{bmatrix}
+a_0^{(3)}\\a_1^{(3)}\\a_2^{(3)}\\ \cdots 
+\end{bmatrix} \rightarrow \cdots \rightarrow \begin{bmatrix}
+a_0^{(j)}\\a_1^{(j)}\\a_2^{(j)}\\ \cdots 
+\end{bmatrix} \rightarrow \cdots \rightarrow h_{\Theta}(x)
+\end{equation}
+Multiclass neural network:
+\begin{equation}
+\begin{bmatrix}
+x_0\\x_1\\x_2\\ \vdots \\x_n
+\end{bmatrix} \rightarrow \begin{bmatrix}
+a_0^{(2)}\\a_1^{(2)}\\a_2^{(2)}\\ \cdots 
+\end{bmatrix} \rightarrow \begin{bmatrix}
+a_0^{(3)}\\a_1^{(3)}\\a_2^{(3)}\\ \cdots 
+\end{bmatrix} \rightarrow \cdots \rightarrow \begin{bmatrix}
+a_0^{(j)}\\a_1^{(j)}\\a_2^{(j)}\\ \cdots 
+\end{bmatrix} \rightarrow \cdots \rightarrow \begin{bmatrix}
+h_{\Theta}(x)_1\\ h_{\Theta}(x)_2\\ h_{\Theta}(x)_3\\ \vdots \\ h_{\Theta}(x)_k\\ 
+\end{bmatrix}
+\end{equation}
+\subsubsection{Forward propagation}
+The role of feed forward propagation is to calculate the hypothesis $h_{\Theta}(x)$ and - if tracking - the overall cost $J(\Theta)$. The values of $h_{\Theta}(x)$ feed directly into the back propagation algorithm.\\
+\\
+Note: Feed forward and back propagation are carried out element-wise through the training data, typically using a for-loop:
+\begin{equation}
+\begin{split}
+& \textrm{for $i$ in range(m):}\\
+& \cdots\\
+& \cdots
+\end{split}
+\end{equation}
+For layer 1:
+\begin{equation}
+a^{(1)}=X
+\end{equation}
+For layer 2:
+\begin{equation*}
+z^{(2)}=\Theta^{(1)T}X\\
+\end{equation*}
+\begin{equation*}
+a^{(2)}=g(z^{(2)})\\
+\end{equation*}
+\begin{equation}
+\textrm{[Then add bias unit as column of ones]}
+\end{equation}
+For layer $l+1$:
+\begin{equation*}
+z^{(l+1)}=\Theta^{(l)T}a^{(l)}\\
+\end{equation*}
+\begin{equation*}
+a^{(l+1)}=g(z^{(l+1)})\\
+\end{equation*}
+\begin{equation}
+\textrm{[Then add bias unit as column of ones]}
+\end{equation}
+For output layer:
+\begin{equation*}
+z^{(L)}=\Theta^{(L-1)T}a^{(L-1)}\\
+\end{equation*}
+\begin{equation}
+a^{(L)}=g(z^{(L)})=h_{\Theta}(x)\\
+\end{equation}
+The cost function (unregularised)is then defined as:
+\begin{equation}
+J_{\Theta}(x)=\frac{1}{m}\sum_{t=1}^{m}\sum_{k=1}^{K}[y^{(i)}_{k}log(h_{\Theta}(x^{(i)})_{k})+(1-y^{(i)}_{k})log(1-h_{\Theta}(x^{(i)})_{k})]
+\end{equation}
+And regularised is:
+\begin{equation}
+J_{\Theta}(x)=\frac{1}{m}\sum_{t=1}^{m}\sum_{k=1}^{K}[y^{(i)}_{k}log(h_{\Theta}(x^{(i)})_{k})+(1-y^{(i)}_{k})log(1-h_{\Theta}(x^{(i)})_{k})]+\frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l}+1}(\Theta^{(l)}_{j,i})^{2}
+\end{equation}
+\subsubsection{Backpropagation}
+The aim of back propagation is to calculate the gradient $\frac{\partial}{\partial \Theta^{(l)}_{i,j} }J(\Theta)$, which can then be used in an update rule such as gradient descent.\\
+\\
+Back propagation is carried out element-wise through the training data, typically using a for-loop:
+\begin{equation}
+\begin{split}
+& \textrm{for $t$ in range(m):}\\
+& \cdots\\
+& \cdots
+\end{split}
+\end{equation}
+\subsubsection*{Calculating $\delta$}
+We calculate $\delta$ for layers $L$,$(L-1)$,$(L-2)$,$\cdots$,$2$. Note that we do not calculate $\delta^{1}$ i.e. $\delta$ for the input layer.\\
+\\
+For the output later:
+\begin{equation}
+\delta^{(L)}=a^{(L)}-y
+\end{equation}
+For the hidden layers:
+\begin{equation}
+\delta^{(l)}=((\Theta^{(l)})^{T}\delta^{(l+1)}).*g'(z^{(l)})
+\end{equation}
+Where:
+\begin{equation}
+g'(z^{(l)})=g(z^{(l)}).*(1-g(z^{(l)}))=a^{(l)}.*(1-a^{(l)})
+\end{equation}
+And, as before (although written a little differently):
+\begin{equation}
+z^{(l)}=(\Theta^{(l-1)})^{T}a^{(l-1)}
+\end{equation}
+And $.*$ is the element-wise multiplication.\\
+\\
+Note that $\delta^{l}$ is a 2-D vector with the same number of units as layer $l$:
+\begin{equation}
+[\delta^{l}]=\begin{bmatrix}
+& &\\
+& \uparrow &\\
+& s_l+1 &\\
+& \downarrow &\\
+& &
+\end{bmatrix}
+\end{equation}
+Element-wise, this is implemented as:\\
+\\
+$for\;t\;in\;range(m):$
+\begin{equation*}
+(\delta^{(L)})^{(t)}=(a^{(L)})^{(t)}-y^{(t)}\\
+\end{equation*}
+\begin{equation}
+(\delta^{(l)})^{(t)}=((\Theta^{(l)})^{T}\delta^{(l+1)}).*(a^{(l)})^{(t)}.*(1-(a^{(l)})^{(t)})
+\end{equation}
+Where:
+\begin{equation}
+[(\delta^{(l)})^{(t)}=((\Theta^{(l)})^{T}\delta^{(l+1)})]=
+\end{equation}
+\subsubsection*{Calculating $\Delta$}
+Note that $\Delta^{(l)}$ has the same dimensions as $\Theta^{(l)}$:
+\begin{equation}
+[\delta^{(l)}]=[\Theta^{(l)}]=\begin{bmatrix}
+& & \leftarrow & s_{l}+1 & \rightarrow & &\\
+& \uparrow & & & & & \\
+& s_{l+1} & & & & & \\
+& \downarrow & & & & & \\
+& & & & & & \\
+\end{bmatrix}
+\end{equation}
+\end{document}

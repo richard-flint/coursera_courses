@@ -3,6 +3,9 @@
 Created on Mon Dec 21 11:50:10 2020
 
 @author: richa
+
+Summary: This script carries out a simple logistic regression using a sample
+dataset.
 """
 #Import packages
 import os

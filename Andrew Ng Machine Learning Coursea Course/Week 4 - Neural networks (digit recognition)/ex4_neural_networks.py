@@ -3,6 +3,11 @@
 Created on Mon Apr 20 10:02:06 2020
 
 @author: richard_dev
+
+Summary: This script implements a neural network algorithm to identify the
+digits 0 to 9 in greyscale images. Note that This implementation estimates
+its own value for theta using forward and backward propagation. This uses the 
+same dataset as Week 3. 
 """
 
 #Clear workspace
@@ -19,7 +24,7 @@ import ex4_neural_networks_functions as udf
 # =========================== Define model parameters ====================== #
 # ========================================================================== #
 regularisation = 1          #0=OFF, 1=ON
-random_initialisation = 0   #0=OFF, 1=ON This currently doesnt work when on!
+random_initialisation = 0   #0=OFF, 1=ON This currently doesn't work when on!
 is_gradient_check=1         #0=OFF, 1=ON
 k=1
 epsilon_theta_initialise=0.12

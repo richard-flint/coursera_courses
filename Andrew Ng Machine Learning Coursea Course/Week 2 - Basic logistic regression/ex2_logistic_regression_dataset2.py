@@ -3,6 +3,9 @@
 Created on Mon Dec 21 13:21:46 2020
 
 @author: richa
+
+Summary: This script carries out a polynomial logistic regression on a sample
+dataset.
 """
 
 #Import packages

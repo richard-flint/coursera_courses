@@ -3,6 +3,9 @@
 Created on Mon May  4 09:52:43 2020
 
 @author: richard_dev
+
+#Summary: This script investigates high variance and high bias algorithms, 
+including ways to identify this in the analysis.
 """
 
 #Clear workspace

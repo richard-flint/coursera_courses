@@ -3,6 +3,9 @@
 Created on Mon Dec 21 10:00:02 2020
 
 @author: richa
+
+Summary: This script carries out a simple linear regression using gradient
+descent. 
 """
 
 # Import packages

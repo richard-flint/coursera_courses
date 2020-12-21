@@ -1,11 +1,18 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 14 15:18:13 2020
+
+@author: richard_dev
+
+Summary: This script implements a multi-class logistic regression algorithm to
+identify the digits 0 to 9 in a greyscale image.
+"""
+
 #Clear workspace
 from IPython import get_ipython
 get_ipython().magic('reset -sf')
 
 #Imports
-import os
-import sys
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import loadmat

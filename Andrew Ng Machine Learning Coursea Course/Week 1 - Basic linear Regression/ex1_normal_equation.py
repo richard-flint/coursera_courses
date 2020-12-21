@@ -3,6 +3,9 @@
 Created on Mon Dec 21 11:33:12 2020
 
 @author: richa
+
+Summary: This script calculates a simple linear regression using the normal
+equation.
 """
 
 # Import packages
